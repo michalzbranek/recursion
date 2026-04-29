@@ -23,13 +23,15 @@
 }
 
 .app-container {
-  max-width: 1000px;
-  margin: 0 auto;
-  padding: 2rem 1rem;
+  max-width: 100%;
+  width: 100%;
+  margin: 0;
+  padding: 0;
 }
 
 .app-header {
-  margin-bottom: 2rem;
+  margin: 0;
+  padding: 1rem;
   text-align: center;
 }
 
@@ -48,7 +50,7 @@
 }
 
 .table-container {
-  overflow-x: auto;
+  width: fit-content;
   border-radius: var(--radius);
   border: 1px solid var(--border-color);
   box-shadow: var(--shadow);
@@ -56,15 +58,49 @@
 }
 
 table {
-  width: 100%;
+  width: auto;
+  table-layout: auto;
   border-collapse: collapse;
-  font-size: 0.875rem;
+  font-size: 0.8125rem;
   text-align: left;
 }
 
 th, td {
-  padding: 0.75rem 1rem;
+  padding: 0.5rem 0.5rem;
   border-bottom: 1px solid var(--border-color);
+  width: 1%;
+  white-space: nowrap;
+}
+
+/* First and last columns (Rozbalit/Smazat) should be as narrow as possible */
+th:first-child, th:last-child {
+  padding: 0.5rem; /* Standard padding for headers to align */
+  width: 45px;
+  min-width: 45px;
+  text-align: center;
+}
+
+td:first-child, td:last-child {
+  padding: 0; /* Full-bleed for buttons in data cells */
+  width: 45px;
+  min-width: 45px;
+}
+
+th {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 80px; /* Allow header to shrink and show ellipsis */
+  vertical-align: bottom;
+  font-weight: 600;
+  text-transform: uppercase;
+  font-size: 0.7rem;
+  letter-spacing: 0.025em;
+}
+
+/* Ensure data cells don't wrap and thus define the column width */
+td {
+  white-space: nowrap;
 }
 
 thead {
@@ -84,9 +120,10 @@ tbody tr:last-child td {
   border-bottom: none;
 }
 
-.nested-table-container {
-  padding: 1rem;
+td.nested-table-container {
+  padding: 0.5rem 0.5rem 0.5rem 5rem !important; /* !important to override td:first-child { padding: 0 } */
   background-color: var(--bg-secondary);
+  border-left: 4px solid var(--primary);
 }
 
 .nested-table {
@@ -96,39 +133,34 @@ tbody tr:last-child td {
 }
 
 .btn-icon {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  width: 2.25rem;
-  height: 2.25rem;
-  border-radius: 0.5rem;
-  border: none;
   cursor: pointer;
   transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
   color: white;
   font-weight: bold;
   font-size: 1.25rem;
   user-select: none;
-  line-height: 1;
+  text-align: center;
+  vertical-align: middle;
+  padding: 0; /* Remove padding to let background fill everything */
 }
 
 .btn-icon:active {
   transform: scale(0.95);
 }
 
-#children {
+.btn-children {
   background-color: var(--primary);
 }
 
-#children:hover {
+.btn-children:hover {
   background-color: var(--primary-hover);
 }
 
-#delete {
+.btn-delete {
   background-color: var(--danger);
 }
 
-#delete:hover {
+.btn-delete:hover {
   background-color: var(--danger-hover);
 }
 
@@ -148,4 +180,28 @@ tbody tr:last-child td {
 
 .expand-button:hover {
   text-decoration: underline;
+}
+
+.btn-children, .btn-delete {
+  text-align: center;
+}
+
+/* Specific column adjustments */
+.column-beer-consumption-l-y,
+.column-knows-the-answer,
+.column-is-alive {
+  text-align: center;
+  padding-left: 0.15rem;
+  padding-right: 0.15rem;
+}
+
+.column-minimal-distance {
+  text-align: right;
+  font-family: monospace;
+}
+
+/* Global cell behavior for long data */
+th, td {
+  overflow-wrap: normal;
+  word-break: normal;
 }

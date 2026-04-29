@@ -8,7 +8,14 @@ function App() {
   const renderHeader = () =>
     Object.keys(data[`${data.root.childrens[0]}`].data).map(
       (header: string, index: number) =>
-        header !== "uuid" && <th key={index}>{header}</th>
+        header !== "uuid" && (
+          <th
+            key={index}
+            className={`column-${header.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "")}`}
+          >
+            {header}
+          </th>
+        )
     );
 
   return (

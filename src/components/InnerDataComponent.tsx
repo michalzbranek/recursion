@@ -10,7 +10,7 @@ function InnerDataComponent({ data, uuid }: InnerDataProps) {
     <tr className="table-row">
       {data[`${uuid}`] !== undefined &&
       data[`${uuid}`].childrens.length !== 0 ? (
-        <td id="children" className="btn-icon" onClick={() => handleShowHide(uuid)}>
+        <td className="btn-icon btn-children" onClick={() => handleShowHide(uuid)}>
           {data[`${uuid}`].showChildrens ? "−" : "+"}
         </td>
       ) : (
@@ -20,12 +20,15 @@ function InnerDataComponent({ data, uuid }: InnerDataProps) {
         Object.keys(data[`${uuid}`].data).map(
           (header: string, index: number) =>
             header !== "uuid" && (
-              <td key={index}>
+              <td
+                key={index}
+                className={`column-${header.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "")}`}
+              >
                 {data[`${uuid}`].data[header as keyof ProcessedData]}
               </td>
             )
         )}
-      <td id="delete" className="btn-icon" onClick={() => handleDelete(uuid)}>
+      <td className="btn-icon btn-delete" onClick={() => handleDelete(uuid)}>
         ×
       </td>
     </tr>
