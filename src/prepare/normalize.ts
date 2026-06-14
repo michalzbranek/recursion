@@ -8,7 +8,7 @@ const normalize = (
 ) => {
   // go through every element of parsed json
   for (const oldElement of json) {
-    let childrensArray = [];
+    const childrensArray = [];
     // if there is at least one children then push its UUID into array
     if (
       Array.isArray(oldElement.children) &&
@@ -26,13 +26,12 @@ const normalize = (
       showChildrens: false,
     };
     // recursively call normalize for its children from old parsed json
-    if (Array.isArray(oldElement.children)) {
-      oldElement.children.length !== undefined &&
-        normalize(
-          oldElement.children,
-          normalizedDataObject,
-          oldElement.data.uuid
-        );
+    if (Array.isArray(oldElement.children) && oldElement.children.length !== undefined) {
+      normalize(
+        oldElement.children,
+        normalizedDataObject,
+        oldElement.data.uuid
+      );
     }
     normalizedDataObject[normalizedElement.data.uuid!] = normalizedElement;
   }
