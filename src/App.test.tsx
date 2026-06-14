@@ -1,6 +1,5 @@
-import { test } from "vitest";
-import { vi } from "vitest";
-import { render } from "@testing-library/react";
+import { test, vi } from "vitest";
+import { render, screen } from "@testing-library/react";
 import { Provider } from "react-redux";
 import { configureStore } from "@reduxjs/toolkit";
 
@@ -22,4 +21,5 @@ test("renders without crashing", () => {
       <App />
     </Provider>
   );
+  expect(screen.getByRole("heading")).toBeInTheDocument();
 });
