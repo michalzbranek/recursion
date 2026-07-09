@@ -17,10 +17,8 @@ jobs:
         with:
           github-token: "${{ secrets.GITHUB_TOKEN }}"
 
-      - name: Enable auto-merge for patch/minor dev-dependency bumps
-        if: |
-          steps.metadata.outputs.update-type != 'version-update:semver-major' &&
-          steps.metadata.outputs.dependency-type == 'direct:development'
+      - name: Enable auto-merge for patch/minor bumps
+        if: steps.metadata.outputs.update-type != 'version-update:semver-major'
         run: gh pr merge --auto --squash "$PR_URL"
         env:
           PR_URL: ${{ github.event.pull_request.html_url }}
