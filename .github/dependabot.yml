@@ -4,8 +4,26 @@ updates:
     directory: "/"
     schedule:
       interval: "weekly"
+    # Dependabot puts each update into the first matching group:
+    # minor/patch land in one auto-merged PR, majors are batched per package family
+    # so that peer-dependent packages (e.g. vitest + @vitest/coverage-v8) move together.
+    groups:
+      minor-patch:
+        patterns: ["*"]
+        update-types: ["minor", "patch"]
+      vitest:
+        patterns: ["vitest", "@vitest/*"]
+      react:
+        patterns: ["react", "react-dom", "@types/react", "@types/react-dom"]
+      eslint:
+        patterns: ["eslint", "@eslint/*"]
+      typescript:
+        patterns: ["typescript", "typescript-eslint"]
 
   - package-ecosystem: "github-actions"
     directory: "/"
     schedule:
       interval: "weekly"
+    groups:
+      actions:
+        patterns: ["*"]
